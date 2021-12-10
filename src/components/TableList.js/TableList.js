@@ -50,7 +50,7 @@ function TableList({ users, changeData, rowsData, hasButton, addTask, handleSort
   const [tablePage, setTablePage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [selectedUser, setSelectedUser] = useState("all");
-
+  const [activeSorting, setActiveSorting] = useState("")
 
 
   const handleChangePage = (event, newPage) => {
@@ -76,6 +76,17 @@ function TableList({ users, changeData, rowsData, hasButton, addTask, handleSort
   useEffect(() => {
     setTablePage(0);
   }, [rowsData])
+
+  const handleTableSorting = (event) => {
+    console.log(event.target.id)
+    if (event.target.id == activeSorting) {
+      handleSort("reset")
+      setActiveSorting("")
+    } else {
+      handleSort(event.target.id)
+      setActiveSorting(event.target.id)
+    }
+  }
 
 
   return (
@@ -103,8 +114,8 @@ function TableList({ users, changeData, rowsData, hasButton, addTask, handleSort
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead sx={{backgroundColor: "primary.main"}}>
             <TableRow>
-              <TableCell sx={{color:"white"}} onClick={() => handleSort("task")}>Attività</TableCell>
-              <TableCell sx={{color:"white"}} onClick={() => handleSort("user")}>Operatore</TableCell>
+              <TableCell id="task" sx={{color:"white", textDecoration: activeSorting == "task" ? "underline": "none"}} onClick={handleTableSorting}>Attività</TableCell>
+              <TableCell id="user" sx={{color:"white",textDecoration: activeSorting == "user" ? "underline": "none"}} onClick={handleTableSorting}>Operatore</TableCell>
               {hasButton && <TableCell></TableCell>}
             </TableRow>
           </TableHead>

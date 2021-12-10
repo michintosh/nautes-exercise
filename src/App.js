@@ -5,6 +5,7 @@ import MainBoard from "./components/MainBoard";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { itIT as coreitIT } from '@mui/material/locale';
 import { gql, useQuery } from "@apollo/client";
+import LinearProgress from '@mui/material/LinearProgress';
 import './App.css'
 
 const theme = createTheme({
@@ -20,7 +21,7 @@ const theme = createTheme({
   coreitIT
 });
 
-const EXCHANGE_RATES = gql`
+const MAIN_DATA = gql`
   query {
     users {
       id
@@ -40,12 +41,13 @@ let rowsCleaned = [];
 let users = [];
 
 export default function App() {
-  const { loading, error, data } = useQuery(EXCHANGE_RATES);
+  const { loading, error, data } = useQuery(MAIN_DATA);
 
   if (!loading) {
     rowsCleaned = []
     console.log(data);
     data.todos.map((todo) => {
+      // clean the data linking the user firstname
       let tmp_obj = {};
       const result = data.users.find((user) => user.id == todo.user.id);
       tmp_obj.firstname = result.firstname;
@@ -56,17 +58,24 @@ export default function App() {
     });
     users = [...data.users]
   }
+  if (error) return `Error! ${error}`;
 
  
 
   return (
     <ThemeProvider theme={theme}>
+      {loading &&
+        <Box >
+          <LinearProgress />
+        </Box>
+      }
       {!loading && (
         <Box sx={{ display: "flex", height:"100%" }}>
           <Sidebar />
           <MainBoard users={users} data={rowsCleaned} />
         </Box>
       )}
+
     </ThemeProvider>
   );
 }

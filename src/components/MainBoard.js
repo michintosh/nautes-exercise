@@ -7,14 +7,14 @@ import { Routes, Route, useLocation } from "react-router-dom";
 
 function MainBoard({ data, users }) {
   const location = useLocation();
-  const [mainData, setMainData] = useState(data);
   const [doneTasks, setDoneTasks] = useState(
     data.filter((el) => el.done == true)
   );
   const [undoneTasks, setUndoneTasks] = useState(
     data.filter((el) => el.done == false)
   );
-
+  
+  
 
   const changeData = (id) => {
     let tmp_arr = [...undoneTasks];
@@ -64,6 +64,19 @@ function MainBoard({ data, users }) {
           return -1;
         }
         if (a.firstname > b.firstname) {
+          return 1;
+        }
+        return 0;
+      });
+      location.pathname == "/" ? setUndoneTasks(tmp_arr) : setDoneTasks(tmp_arr);
+    } else if (type == "reset") {
+      // TO DO - not ideal to use "location.pathname" to resolve the orders filter
+      tmp_arr = location.pathname == "/" ? [...undoneTasks] : [...doneTasks];
+      tmp_arr = tmp_arr.sort(function (a, b) {
+        if (a.id < b.id) {
+          return -1;
+        }
+        if (a.id > b.id) {
           return 1;
         }
         return 0;

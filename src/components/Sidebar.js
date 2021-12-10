@@ -28,8 +28,10 @@ function Sidebar() {
         <MenuItem component={NavLink} to="/" sx={{
           color: location.pathname == "/" ? "white" : "darkgrey",
           padding:"1rem",
-          backgroundColor: location.pathname == "/" ? "secondary.dark" :"secondary.main" ,
-          borderLeft: location.pathname == "/" ? "5px red solid" : "5px transparent solid"
+          backgroundColor: location.pathname == "/" ? "secondary.dark" : "secondary.main",
+          borderLeftStyle: "solid",
+          borderColor: location.pathname == "/" ? "primary.main" : "transparent",
+          borderWidth: "5px" 
         }}>
           <ListItemIcon>
             <BusinessCenterIcon sx={{color: location.pathname == "/" ? "white" : "darkgrey",}} fontSize="small" />
@@ -40,7 +42,9 @@ function Sidebar() {
           color: location.pathname == "/done" ? "white" : "darkgrey",
           padding:"1rem",
           backgroundColor: location.pathname == "/done" ? "secondary.dark" :"secondary.main" ,
-          borderLeft: location.pathname == "/done" ? "5px red solid" : "5px transparent solid"
+          borderLeftStyle: "solid",
+          borderColor: location.pathname == "/done" ? "primary.main" : "transparent",
+          borderWidth: "5px" 
         }}>
           <ListItemIcon>
             <AssignmentIcon sx={{color: location.pathname == "/done" ? "white" : "darkgrey",}} fontSize="small" />

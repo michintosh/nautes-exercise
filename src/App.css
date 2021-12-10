@@ -1,15 +1,33 @@
+
+.MuiTableCell-head:hover {
+  cursor: pointer;
+}
+
+/* HC for bottom pagination bar, to remove */
+.MuiToolbar-root {
+  justify-content: flex-end;
+}
 .MuiTablePagination-displayedRows,.MuiTablePagination-selectLabel {
   font-size: .7rem !important;
   margin-right: 10px;
+}
+.MuiTablePagination-selectLabel{
+  margin-right: 0;
+}
+
+.MuiTablePagination-spacer {
+  display: none;
 }
 .MuiPaginationItem-outlined {
   margin: 0;
   width: 40px;
 }
 
+
 .MuiInputBase-root.MuiInputBase-colorPrimary.css-16c50h-MuiInputBase-root-MuiTablePagination-select {
   border: 1px solid rgba(0, 0, 0, 0.23);
   border-radius: 4px; 
+  margin-right: auto;
 }
 .MuiPaginationItem-outlined.Mui-selected {
   color:white;

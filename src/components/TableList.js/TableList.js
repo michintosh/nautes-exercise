@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -25,8 +25,7 @@ function TablePaginationActions(props) {
 
 
   const handleChange = (event, page) => {
-    console.log(event.target);
-    console.log(page);
+    // TO DO - remove HC +1
     onPageChange(event, page-1);
   };
 
@@ -34,8 +33,8 @@ function TablePaginationActions(props) {
     <Box sx={{ flexShrink: 0 }}>
       <Stack spacing={0}>
         <Pagination
-          //count={Math.max(0, (Math.ceil(count / rowsPerPage)-1))}
           count={Math.ceil(count / rowsPerPage)}
+          // TO DO - remove HC +1
           page={page+1}
           onChange={handleChange}
           variant="outlined"
@@ -74,6 +73,9 @@ function TableList({ users, changeData, rowsData, hasButton, addTask, handleSort
     } elementi`;
   }
 
+  useEffect(() => {
+    setTablePage(0);
+  }, [rowsData])
 
 
   return (

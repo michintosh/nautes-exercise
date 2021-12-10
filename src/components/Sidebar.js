@@ -24,7 +24,7 @@ function Sidebar() {
       }}
     >
       <Logo />
-      <MenuList>
+      <MenuList sx={{padding:"2rem 0"}}>
         <MenuItem component={NavLink} to="/" sx={{
           color: location.pathname == "/" ? "white" : "darkgrey",
           padding:"1rem",

@@ -1,25 +1,72 @@
-import logo from './logo.svg';
-import './App.css';
+import  React from "react";
+import Box from "@mui/material/Box";
+import Sidebar from "./components/Sidebar";
+import MainBoard from "./components/MainBoard";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { itIT as coreitIT } from '@mui/material/locale';
+import { gql, useQuery } from "@apollo/client";
+import './App.css'
 
-function App() {
+const theme = createTheme({
+  palette: {
+    type: "light",
+    primary: {
+      main: "#be0010",
+    },
+    secondary: {
+      main: "#2a3948",
+    },
+  },
+  coreitIT
+});
+
+const EXCHANGE_RATES = gql`
+  query {
+    users {
+      id
+      firstname
+    }
+    todos {
+      id
+      task
+      done
+      user {
+        id
+      }
+    }
+  }
+`;
+let rowsCleaned = [];
+let users = [];
+
+export default function App() {
+  const { loading, error, data } = useQuery(EXCHANGE_RATES);
+
+  if (!loading) {
+    rowsCleaned = []
+    console.log(data);
+    data.todos.map((todo) => {
+      let tmp_obj = {};
+      const result = data.users.find((user) => user.id == todo.user.id);
+      tmp_obj.firstname = result.firstname;
+      tmp_obj.task = todo.task;
+      tmp_obj.done = todo.done;
+      tmp_obj.id = todo.id
+      rowsCleaned.push(tmp_obj);
+    });
+    users = [...data.users]
+  }
+
+ 
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      {!loading && (
+        <Box sx={{ display: "flex", height:"100%" }}>
+          <Sidebar />
+          <MainBoard users={users} data={rowsCleaned} />
+        </Box>
+      )}
+    </ThemeProvider>
   );
 }
-
-export default App;

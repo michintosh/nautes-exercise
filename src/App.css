@@ -1,38 +1,28 @@
-.App {
-  text-align: center;
+.MuiTablePagination-displayedRows,.MuiTablePagination-selectLabel {
+  font-size: .7rem;
+}
+.MuiPaginationItem-outlined {
+  margin: 0;
+  width: 40px;
+}
+.MuiPaginationItem-outlined.Mui-selected {
+  color:white;
+  background-color: #626e79 !important;
+}
+button.MuiButtonBase-root.MuiPaginationItem-root.MuiPaginationItem-sizeMedium{
+  margin: 0;
+  width: 40px;
+  border-radius: 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.MuiTablePagination-select.MuiNativeSelect-select.MuiNativeSelect-standard.MuiInputBase-input {
+  border: 1px solid rgba(0, 0, 0, 0.23);
+  border-radius: 4px;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+ul.MuiPagination-ul li:first-child button {
+  border-radius: 4px 0 0 4px  !important;
 }
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+ul.MuiPagination-ul li:last-child button {
+  border-radius: 0 4px 4px 0  !important;
 }

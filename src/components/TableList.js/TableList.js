@@ -107,15 +107,15 @@ function TableList({ users, changeData, rowsData, hasButton, addTask, handleSort
         setPage={setTablePage}
       />
       <TableContainer
-        sx={{ maxHeight: "50vh", overflow: "auto" }}
+        sx={{ maxHeight: "40vh", overflow: "auto" }}
         component={Paper}
       >
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead sx={{backgroundColor: "primary.main"}}>
+        <Table stickyHeader sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead >
             <TableRow>
-              <TableCell id="task" sx={{color:"white", textDecoration: activeSorting == "task" ? "underline": "none"}} onClick={handleTableSorting}>Attività</TableCell>
-              <TableCell id="user" sx={{color:"white",textDecoration: activeSorting == "user" ? "underline": "none"}} onClick={handleTableSorting}>Operatore</TableCell>
-              {hasButton && <TableCell></TableCell>}
+              <TableCell id="task" sx={{backgroundColor: "primary.main",color:"white", textDecoration: activeSorting == "task" ? "underline": "none"}} onClick={handleTableSorting}>Attività</TableCell>
+              <TableCell id="user" sx={{backgroundColor: "primary.main",color:"white",textDecoration: activeSorting == "user" ? "underline": "none"}} onClick={handleTableSorting}>Operatore</TableCell>
+              {hasButton && <TableCell sx={{backgroundColor: "primary.main"}}></TableCell>}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -177,7 +177,7 @@ function TableList({ users, changeData, rowsData, hasButton, addTask, handleSort
           </TableBody>
         </Table>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+          rowsPerPageOptions={[5, 10, 25, { label: "Tutti", value: -1 }]}
           colSpan={3}
           count={
             selectedUser != "all"

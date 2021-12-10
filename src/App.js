@@ -45,7 +45,6 @@ export default function App() {
 
   if (!loading) {
     rowsCleaned = []
-    console.log(data);
     data.todos.map((todo) => {
       // clean the data linking the user firstname
       let tmp_obj = {};

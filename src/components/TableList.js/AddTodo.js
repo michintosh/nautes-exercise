@@ -15,7 +15,6 @@ function AddTodo({ users, addTask }) {
 
   const handleUserChange = (event) => {
     setUser(event.target.value);
-    console.log(event.target.value);
   };
   const handleTextChange = (event) => {
     setTask(event.target.value);

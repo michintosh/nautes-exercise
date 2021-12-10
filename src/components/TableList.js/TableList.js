@@ -78,7 +78,6 @@ function TableList({ users, changeData, rowsData, hasButton, addTask, handleSort
   }, [rowsData])
 
   const handleTableSorting = (event) => {
-    console.log(event.target.id)
     if (event.target.id == activeSorting) {
       handleSort("reset")
       setActiveSorting("")

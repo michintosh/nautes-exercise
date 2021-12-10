@@ -10,8 +10,6 @@ function TablePaginationActions(props) {
   
 
     const handleChange = (event, page) => {
-      console.log(event.target);
-      console.log(page);
       onPageChange(event, page);
     };
   

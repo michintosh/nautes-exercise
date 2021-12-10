@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -6,20 +6,20 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TablePagination from "@mui/material/TablePagination";
+import { Typography } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
 import FilterUsers from "./FilterUsers";
 import AddTodo from "./AddTodo";
-import { Typography } from "@mui/material";
 
 
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 
 
-
+// TO DO - move into separate component
 function TablePaginationActions(props) {
   const { count, page, rowsPerPage, onPageChange } = props;
 
@@ -27,15 +27,16 @@ function TablePaginationActions(props) {
   const handleChange = (event, page) => {
     console.log(event.target);
     console.log(page);
-    onPageChange(event, page);
+    onPageChange(event, page-1);
   };
 
   return (
     <Box sx={{ flexShrink: 0 }}>
       <Stack spacing={0}>
         <Pagination
-          count={Math.max(0, Math.ceil(count / rowsPerPage)) - 1}
-          page={page}
+          //count={Math.max(0, (Math.ceil(count / rowsPerPage)-1))}
+          count={Math.ceil(count / rowsPerPage)}
+          page={page+1}
           onChange={handleChange}
           variant="outlined"
           shape="rounded"
@@ -46,54 +47,33 @@ function TablePaginationActions(props) {
 }
 
 
-function TableList({ users, changeData, rowsData, hasButton, addTask }) {
-  const [page, setPage] = useState(0);
+function TableList({ users, changeData, rowsData, hasButton, addTask, handleSort }) {
+  const [tablePage, setTablePage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [selectedUser, setSelectedUser] = useState("all");
-  const [sorted, setSorted] = useState(rowsData)
-  const [order, setOrder] = useState("ASC")
+
 
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+    setTablePage(newPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
+    setTablePage(0);
   };
 
   const handleTask = (id) => {
     changeData(id);
   };
 
-  const handleSort = (type) => {
-    let tmp_arr = [...rowsData]
-    if (type == "task") {
-        tmp_arr = tmp_arr.sort(function(a, b){
-          if(a.task < b.task) { return -1; }
-          if(a.task > b.task) { return 1; }
-          return 0;
-        })
-      
-    }
-    else if (type == "user") {
-      tmp_arr = tmp_arr.sort(function(a, b){
-        if(a.firstname < b.firstname) { return -1; }
-        if(a.firstname > b.firstname) { return 1; }
-        return 0;
-      })
-    }
-    rowsData = tmp_arr
-    console.log(rowsData)
-  }
-
-
+  // TO DO - move into separate component
   function showElements({ from, to, count }) {
     return `Mostra da ${from} a ${to} di ${
       count !== -1 ? count : `più di ${to}`
     } elementi`;
   }
+
 
 
   return (
@@ -112,16 +92,17 @@ function TableList({ users, changeData, rowsData, hasButton, addTask }) {
         users={users}
         selectedUser={selectedUser}
         setSeletctedUser={setSelectedUser}
+        setPage={setTablePage}
       />
       <TableContainer
         sx={{ maxHeight: "50vh", overflow: "auto" }}
         component={Paper}
       >
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
+          <TableHead sx={{backgroundColor: "primary.main"}}>
             <TableRow>
-              <TableCell onClick={() => handleSort("task")}>Attività</TableCell>
-              <TableCell onClick={() => handleSort("user")}>Operatore</TableCell>
+              <TableCell sx={{color:"white"}} onClick={() => handleSort("task")}>Attività</TableCell>
+              <TableCell sx={{color:"white"}} onClick={() => handleSort("user")}>Operatore</TableCell>
               {hasButton && <TableCell></TableCell>}
             </TableRow>
           </TableHead>
@@ -130,7 +111,7 @@ function TableList({ users, changeData, rowsData, hasButton, addTask }) {
               (rowsPerPage > 0
                 ? rowsData
                     .filter((row) => row.firstname == selectedUser)
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .slice(tablePage * rowsPerPage, tablePage * rowsPerPage + rowsPerPage)
                 : rowsData.filter((row) => row.firstname == selectedUser)
               ).map((row) => (
                 <TableRow key={row.id}>
@@ -153,8 +134,8 @@ function TableList({ users, changeData, rowsData, hasButton, addTask }) {
             {selectedUser == "all" &&
               (rowsPerPage > 0
                 ? rowsData.slice(
-                    page * rowsPerPage,
-                    page * rowsPerPage + rowsPerPage
+                  tablePage * rowsPerPage,
+                  tablePage * rowsPerPage + rowsPerPage
                   )
                 : rowsData
               ).map((row) => (
@@ -192,13 +173,7 @@ function TableList({ users, changeData, rowsData, hasButton, addTask }) {
               : rowsData.length
           }
           rowsPerPage={rowsPerPage}
-          page={page}
-          SelectProps={{
-            inputProps: {
-              "aria-label": "Visualizza Elementi",
-            },
-            native: true,
-          }}
+          page={tablePage}
           labelDisplayedRows={showElements}
           labelRowsPerPage={"Visualizza Elementi"}
           onPageChange={handleChangePage}
@@ -207,6 +182,8 @@ function TableList({ users, changeData, rowsData, hasButton, addTask }) {
           sx={{
             position: "absolute",
             bottom: 0,
+            right:0,
+            width:"85%"
           }}
         />
       </TableContainer>

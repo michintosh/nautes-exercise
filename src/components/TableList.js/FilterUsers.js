@@ -5,9 +5,10 @@ import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 
-function FilterUsers({ users, selectedUser, setSeletctedUser }) {
+function FilterUsers({ users, selectedUser, setSeletctedUser, setPage }) {
   const handleChange = (event) => {
     setSeletctedUser(event.target.value);
+    setPage(0)
   };
   return (
     <FormControl fullWidth sx={{marginBottom:"1rem"}}>

@@ -13,20 +13,19 @@ function AddTodo({ users, addTask }) {
   const [user, setUser] = useState({});
   const [task, setTask] = useState("Lorem Ipsum");
 
-    const handleUserChange = (event) => {
-        setUser(event.target.value)
-        console.log(event.target.value)
+  const handleUserChange = (event) => {
+    setUser(event.target.value);
+    console.log(event.target.value);
   };
-    const handleTextChange = (event) => {
-      setTask(event.target.value)
+  const handleTextChange = (event) => {
+    setTask(event.target.value);
   };
-    const handleAddTask = () => {
-        if (Object.keys(user).length === 0) {
-            alert("Inserire operatore")
-        } else {
-
-            addTask(user,task)
-        }
+  const handleAddTask = () => {
+    if (Object.keys(user).length === 0) {
+      alert("Inserire operatore");
+    } else {
+      addTask(user, task);
+    }
   };
 
   return (
@@ -40,48 +39,60 @@ function AddTodo({ users, addTask }) {
       >
         Nuova Attività
       </Typography>
-      <Stack
-        component="form"
-        direction="row" 
-        noValidate
-              autoComplete="off"
-              spacing={1}
-      >
-        <TextField
-          required
-          id="outlined-required"
-          label="Descrizione"
-                  defaultValue={task}
-                  onChange={handleTextChange}
-          sx={{
-            flex: 1,
-          }}
-        />
-        <FormControl
-          fullWidth
-          sx={{
-            flex: 1,
-          }}
+      <Box sx={{padding: "1rem", backgroundColor: "#cfd8e0", borderRadius:"4px"}}>
+        <Stack
+          component="form"
+          direction="row"
+          noValidate
+          autoComplete="off"
+          spacing={1}
         >
-          <InputLabel id="demo-simple-select-label">operatore</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={user}
-            label="Operatore"
-                      onChange={handleUserChange}
-                      required
+          <TextField
+            required
+            id="outlined-required"
+            label="Descrizione"
+            defaultValue={task}
+            onChange={handleTextChange}
+            sx={{
+              flex: 1,
+              backgroundColor: "white",
+              borderRadius:"4px"
+            }}
+            
+          />
+          <FormControl
+            fullWidth
+            sx={{
+              flex: 1,
+            }}
           >
-            {users.map((el) => {
-              return <MenuItem value={el}>{el.firstname}</MenuItem>;
-            })}
-          </Select>
-        </FormControl>
-      </Stack>
-      <Stack direction={"row"} spacing={1} sx={{justifyContent:"flex-end", marginTop:".5rem"}}>
-        <Button variant="contained">Annulla</Button>
-        <Button onClick={handleAddTask} variant="contained">Salva</Button>
-      </Stack>
+            <InputLabel id="demo-simple-select-label">operatore</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={user}
+              label="Operatore"
+              onChange={handleUserChange}
+              required
+              sx={{backgroundColor:"white"}}
+            >
+              {users.map((el) => {
+                return <MenuItem value={el}>{el.firstname}</MenuItem>;
+              })}
+            </Select>
+          </FormControl>
+        </Stack>
+        <Stack
+          direction={"row"}
+          spacing={1}
+          sx={{ justifyContent: "flex-end", marginTop: ".5rem" }}
+        >
+          <Button sx={{backgroundColor: "secondary.main", width:"150px"}} variant="contained">Annulla</Button>
+          <Button sx={{backgroundColor: "#4eaec1", width:"150px"}} onClick={handleAddTask} variant="contained">
+            Salva
+          </Button>
+        </Stack>
+      </Box>
     </Box>
   );
 }
